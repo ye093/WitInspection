@@ -41,7 +41,7 @@
         android:allowClearUserData="true"
         android:debuggable="true"
         android:icon="@drawable/icon"
-        android:label="移动巡检"
+        android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true">
 
