@@ -13,6 +13,11 @@ import io.dcloud.common.DHInterface.IWebview;
 import io.dcloud.common.DHInterface.StandardFeature;
 import io.dcloud.common.util.JSUtil;
 
+/**
+ * 二维码扫描组件
+ * @author YeJY
+ * @version 1.0
+ */
 public class QRCodePlugin extends StandardFeature {
 
     private static final int QRCODE_SCAN_REQUEST = 1122;
