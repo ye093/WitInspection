@@ -1,0 +1,13 @@
+
+      !(function(){
+        var uniAppViewReadyCallback = function(){
+          setCssToHead(["body{background:#FFD800;}\n.",[1],"lottery-draw-banner{width:100%;}\n.",[1],"lottery-draw-banner wx-image{width:100%;}\n.",[1],"lottery-draw-msg{width:80%; border:2px solid #FC5566; border-radius:50px;color:#E81B54; background:rgba(255, 255,255, 0.8); margin:0 auto; margin-top:15px; padding-left:15px; height:36px; overflow:hidden;}\n.",[1],"lottery-draw-main-bg{width:",[0,600],"; height:",[0,600],"; padding:15px; border-radius:10px; margin:0 auto; margin-top:20px; background:#FC5566;}\n.",[1],"lottery-draw-main{width:",[0,570],"; height:",[0,570],"; padding:",[0,12],"; background:#E81B54; border-radius:8px; display:-webkit-box; display:-webkit-flex; display:-ms-flexbox; display:flex; -webkit-flex-wrap:wrap; -ms-flex-wrap:wrap; flex-wrap:wrap; -webkit-box-pack:center; -webkit-justify-content:center; -ms-flex-pack:center; justify-content:center;}\n.",[1],"lottery-draw-main .",[1],"items{width:",[0,163],"; height:",[0,163],"; background:rgba(255,255,255, 1); margin:",[0,5],"; border-radius:",[0,5],"; border:",[0,8]," solid #FFF; overflow:hidden;}\n.",[1],"lottery-draw-main .",[1],"btn{background:#FFB001; border-color:#FFB001; color:#AB6120; text-align:center; line-height:",[0,163],"; font-weight:700; font-size:24px;}\n.",[1],"lottery-draw-main .",[1],"items .",[1],"img{width:",[0,100],"; height:",[0,100],"; margin:",[0,8]," auto; overflow:hidden;}\n.",[1],"lottery-draw-main .",[1],"items .",[1],"img wx-image{width:100%;}\n.",[1],"lottery-draw-main .",[1],"items .",[1],"name{line-height:",[0,40],"; height:",[0,40],"; overflow:hidden; text-align:center; color:#AB6120; font-size:12px;}\n.",[1],"lottery-draw-main .",[1],"animate{border-color:#FFD800 !important;}\n@-webkit-keyframes breath { from { opacity: 1; }\n75% { opacity: 0.9; }\n50% { opacity: 0.8; }\n25% { opacity: 0.9; }\nto { opacity: 1; }\n}@keyframes breath { from { opacity: 1; }\n75% { opacity: 0.9; }\n50% { opacity: 0.8; }\n25% { opacity: 0.9; }\nto { opacity: 1; }\n}.",[1],"breath_light{-webkit-animation:breath 1s infinite linear;animation:breath 1s infinite linear;}\n",])();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/lotteryDraw/lotteryDraw.wxml') } }));
+        }
+        if(window.__uniAppViewReady__){
+          uniAppViewReadyCallback()
+        }else{
+          document.addEventListener('uniAppViewReady',uniAppViewReadyCallback)
+        }
+      })();
+      

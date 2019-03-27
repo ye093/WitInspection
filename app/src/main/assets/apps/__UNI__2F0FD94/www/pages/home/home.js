@@ -1,0 +1,13 @@
+
+      !(function(){
+        var uniAppViewReadyCallback = function(){
+          setCssToHead(["body{background:#FFFFFF;}\n.",[1],"home-rows-demo{height:",[0,118],"; color:#FFFFFF; width:100%; line-height:",[0,118],";}\n.",[1],"home-header{width:92%; padding:20px 4%; background:#FFF; display:-webkit-box; display:-webkit-flex; display:-ms-flexbox; display:flex; -webkit-flex-wrap:nowrap; -ms-flex-wrap:nowrap; flex-wrap:nowrap; position:relative; border-bottom:1px solid #E9E9E9;}\n.",[1],"home-header .",[1],"logo{width:60px; height:60px; margin:5px; -webkit-flex-shrink:0; -ms-flex-negative:0; flex-shrink:0;}\n.",[1],"home-header .",[1],"logo wx-image{width:60px; height:60px; border-radius:5px;}\n.",[1],"home-header .",[1],"content{width:100%; margin:10px; margin-right:20px; height:60px;}\n.",[1],"home-header .",[1],"content .",[1],"title{font-size:18px; line-height:22px;}\n.",[1],"home-header .",[1],"content .",[1],"desc{line-height:2em; color:#7F7F7F; margin-top:3px; font-size:13px;}\n.",[1],"home-header .",[1],"icon-right{width:30px; height:100%; line-height:100%; font-family:\x22grace-iconfont\x22 !important; font-style:normal; position:absolute; z-index:1; top:0; right:0; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-align:center; -webkit-align-items:center; -ms-flex-align:center; align-items:center; -webkit-box-pack:center; -webkit-justify-content:center; -ms-flex-pack:center; justify-content:center; font-size:22px;}\n.",[1],"home-header .",[1],"icon-right:before{content:\x22\\E601\x22; color:#B2B2B2;}\n.",[1],"home-item{ color: #2F2F2F; }\n.",[1],"home-item-img{ }\n.",[1],"home-item-icon{ color: #00B26A; -webkit-box-pack:center; -webkit-justify-content:center; -ms-flex-pack:center; justify-content:center; font-size:",[0,100],"; line-height:",[0,80],"; margin-left: 1px; }\n.",[1],"home-item-row{ margin-right:4%; margin-left: 4%; width:92%; background-color: #d3d3d3; margin-top:15px; padding:",[0,50]," 0; border:1px solid #d3d3d3; }\n.",[1],"home-item-img{width:45%; margin:0 auto; text-align:center; padding-bottom:",[0,10],"; font-size:0;height: ",[0,30],";}\n.",[1],"home-item-img wx-image{width:100%;}\n.",[1],"home-item-text{line-height:5em; text-align:center; font-size:14px;margin-top: ",[0,34],";}\n",])();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/home/home.wxml') } }));
+        }
+        if(window.__uniAppViewReady__){
+          uniAppViewReadyCallback()
+        }else{
+          document.addEventListener('uniAppViewReady',uniAppViewReadyCallback)
+        }
+      })();
+      
