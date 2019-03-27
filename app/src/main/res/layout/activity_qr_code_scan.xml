@@ -39,6 +39,4 @@
         app:qrcv_toolbarHeight="56dp"
         app:qrcv_topOffset="65dp"
         app:qrcv_verticalBias="-1" />
-
-    <include layout="@layout/toolbar" />
 </RelativeLayout>
