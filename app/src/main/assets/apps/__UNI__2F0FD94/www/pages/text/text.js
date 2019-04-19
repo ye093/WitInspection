@@ -1,13 +1,2 @@
-
-      !(function(){
-        var uniAppViewReadyCallback = function(){
-          setCssToHead(["body{background:#FFF;}\n",])();
+setCssToHead(["body{background:#FFF;}\n",],undefined,{path:"./pages/text/text.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/text/text.wxml') } }));
-        }
-        if(window.__uniAppViewReady__){
-          uniAppViewReadyCallback()
-        }else{
-          document.addEventListener('uniAppViewReady',uniAppViewReadyCallback)
-        }
-      })();
-      

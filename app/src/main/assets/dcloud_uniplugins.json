@@ -4,14 +4,11 @@
       "hooksClass": "",
       "plugins": [
         {
-          "type": "module",
-          "name": "DCloud-RichAlert",
-          "class": "uni.dcloud.io.uniplugin_richalert.RichAlertWXModule"
+          "type": "component",
+          "name": "mccamera",
+          "class": "com.zhou.witinspection.ui.MCCamera"
         }
       ]
-    },
-    {
-      "hooksClass": "uni.dcloud.io.uniplugin_stepcounter.StepCounterHookProxy"
     }
   ]
 }
