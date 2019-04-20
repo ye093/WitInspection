@@ -161,6 +161,7 @@ public class MCCamera extends WXComponent<CameraView> {
      */
     @JSMethod
     public void captureImage(final JSCallback jsCallback) {
+        // 假如没打开摄像头，先打开
         final CameraView cameraView = getHostView();
         if (cameraView != null && cameraView.isStarted()) {
             cameraView.captureImage(new CameraKitEventCallback<CameraKitImage>() {
@@ -233,6 +234,21 @@ public class MCCamera extends WXComponent<CameraView> {
                     }
                 }
             });
+        } else {
+            if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
+                if (cameraView != null && !cameraView.isStarted()) {
+                    cameraView.start();
+                }
+                Map<String, Object> params = new HashMap<>();
+                params.put(SUCCEED, false);
+                params.put(ERRORDESC, "相机已打开，请再次点击拍照");
+                jsCallback.invoke(params);
+            } else {
+                Map<String, Object> params = new HashMap<>();
+                params.put(SUCCEED, false);
+                params.put(ERRORDESC, "打开照相机需要拍照权限");
+                jsCallback.invoke(params);
+            }
         }
     }
 
