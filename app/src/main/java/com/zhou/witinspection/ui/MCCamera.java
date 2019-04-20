@@ -23,6 +23,7 @@ import com.wonderkiln.camerakit.CameraKit;
 import com.wonderkiln.camerakit.CameraKitEventCallback;
 import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -58,7 +59,6 @@ public class MCCamera extends WXComponent<CameraView> {
             Log.d("yejy", "onRequestPermissionsResult");
         }
     };
-
 
 
     public static final String SUCCEED = "success";
@@ -115,7 +115,9 @@ public class MCCamera extends WXComponent<CameraView> {
         cameraView.setFlash(CameraKit.Constants.FLASH_AUTO);
         cameraView.setFocus(CameraKit.Constants.FOCUS_CONTINUOUS);
         cameraView.setPermissions(CameraKit.Constants.PERMISSIONS_PICTURE);
-        cameraView.setJpegQuality(49);
+        cameraView.setCropOutput(true);
+        cameraView.setJpegQuality(97);
+        cameraView.setMethod(CameraKit.Constants.METHOD_STILL);
         return cameraView;
     }
 
@@ -172,15 +174,17 @@ public class MCCamera extends WXComponent<CameraView> {
                         result.put(SUCCEED, false);
                         result.put(ERRORDESC, "系统异常，请重新检查拍照权限");
                         jsCallback.invoke(result);
+                        cameraView.setActivated(true);
                         return;
                     }
                     byte[] capturedImage = cameraKitImage.getJpeg();
                     if (capturedImage == null) {
+                        cameraView.setJpegQuality(80);
+                        cameraView.setActivated(true);
                         Map<String, Object> result = new HashMap<>();
                         result.put(SUCCEED, false);
                         result.put(ERRORDESC, "图片过大，请重试");
                         jsCallback.invoke(result);
-                        cameraView.setJpegQuality(30);
                         return;
                     }
 
@@ -206,6 +210,7 @@ public class MCCamera extends WXComponent<CameraView> {
                         result.put(SUCCEED, false);
                         result.put(ERRORDESC, "Image does not have the correct src");
                         jsCallback.invoke(result);
+                        cameraView.setActivated(true);
                         return;
                     }
 
@@ -216,7 +221,7 @@ public class MCCamera extends WXComponent<CameraView> {
                         outputStream.flush();
                         Map<String, Object> result = new HashMap<>();
                         result.put(SUCCEED, true);
-                        result.put("path", savedPhoto.getAbsolutePath());
+                        result.put("path", savedPhoto.getPath());
                         jsCallback.invoke(result);
                     } catch (java.io.IOException e) {
                         Map<String, Object> result = new HashMap<>();
@@ -232,8 +237,11 @@ public class MCCamera extends WXComponent<CameraView> {
                             }
                         }
                     }
+                    if (!cameraView.isStarted())
+                        cameraView.start();
                 }
             });
+            cameraView.setActivated(false);
         } else {
             if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
                 if (cameraView != null && !cameraView.isStarted()) {
@@ -306,7 +314,6 @@ public class MCCamera extends WXComponent<CameraView> {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, permissionCallbacks);
     }
-
 
 
 }
