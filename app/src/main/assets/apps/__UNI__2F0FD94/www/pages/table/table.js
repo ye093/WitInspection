@@ -1,2 +1,0 @@
-setCssToHead(["body{background:#F5F6F7;}\n.",[1],"colorYellow{color:#F4711E !important;}\n",],undefined,{path:"./pages/table/table.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/table/table.wxml') } }));

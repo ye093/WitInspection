@@ -1,2 +1,0 @@
-setCssToHead(["wx-progress{margin:12px 0;}\n",],undefined,{path:"./pages/progressbar/progressbar.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/progressbar/progressbar.wxml') } }));

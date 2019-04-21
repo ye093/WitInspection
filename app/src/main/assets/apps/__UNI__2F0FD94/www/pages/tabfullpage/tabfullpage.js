@@ -1,2 +1,0 @@
-setCssToHead(["body{background:#FFFFFF;}\n",],undefined,{path:"./pages/tabfullpage/tabfullpage.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/tabfullpage/tabfullpage.wxml') } }));

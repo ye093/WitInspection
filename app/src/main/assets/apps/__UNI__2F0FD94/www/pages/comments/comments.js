@@ -1,2 +1,0 @@
-setCssToHead(["body{background:#FFF;}\n",],undefined,{path:"./pages/comments/comments.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/comments/comments.wxml') } }));

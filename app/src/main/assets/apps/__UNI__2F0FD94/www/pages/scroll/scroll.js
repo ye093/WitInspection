@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"grace-items-demo1{background:#00B26A;}\n.",[1],"grace-items-demo2{background:#F76260;}\n",],undefined,{path:"./pages/scroll/scroll.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/scroll/scroll.wxml') } }));

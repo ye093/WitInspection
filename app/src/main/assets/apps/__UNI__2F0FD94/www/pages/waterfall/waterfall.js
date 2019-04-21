@@ -1,2 +1,0 @@
-setCssToHead(["body{background:#FFF;}\n",],undefined,{path:"./pages/waterfall/waterfall.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/waterfall/waterfall.wxml') } }));
