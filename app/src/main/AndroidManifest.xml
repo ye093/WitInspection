@@ -72,7 +72,6 @@
         <meta-data android:name="dcloud_uninview_background"
             android:value="true"/>
 
-        <activity android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:name=".QRCodeScanActivity" />
     </application>
 
 </manifest>
