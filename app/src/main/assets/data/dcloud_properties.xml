@@ -62,9 +62,6 @@
 		<feature name="Fingerprint" value="io.dcloud.feature.fingerprint.FingerPrintsImpl"/>
 		<feature name="iBeacon" value="io.dcloud.feature.iBeacon.WxBluetoothFeatureImpl"/>
 		<feature name="Bluetooth" value="io.dcloud.feature.bluetooth.BluetoothFeature"/>
-
-		<!--新增二维码扫描-->
-		<feature name="QRCodeScan" value="com.zhou.witinspection.QRCodePlugin"/>
 	</features>
 
 	<services>

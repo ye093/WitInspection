@@ -239,6 +239,7 @@ public class MCCamera extends WXComponent<CameraView> {
                     }
                     if (!cameraView.isStarted())
                         cameraView.start();
+                    Log.d("yejy", "图片路径为：" + savedPhoto);
                 }
             });
             cameraView.setActivated(false);
