@@ -4,8 +4,12 @@ package com.zhou.witinspection.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Size;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 
@@ -28,12 +32,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
+import io.dcloud.common.adapter.util.PermissionUtil;
 
 /**
  * WX自定义Camera
@@ -41,29 +43,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 @Component(lazyload = false)
 public class MCCamera extends WXComponent<CameraView> {
 
-    private final EasyPermissions.PermissionCallbacks permissionCallbacks = new EasyPermissions.PermissionCallbacks() {
-        @Override
-        public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-            Log.d("yejy", "onPermissionsGranted");
-
-        }
-
-        @Override
-        public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-            Log.d("yejy", "onPermissionsDenied");
-
-        }
-
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            Log.d("yejy", "onRequestPermissionsResult");
-        }
-    };
-
 
     public static final String SUCCEED = "success";
     public static final String ERRORDESC = "errorDesc";
-    public static final int CAMERA_PERMISSION_REQUEST_CODE = 0x33;
 
     private final WXSDKInstance instance;
 
@@ -108,7 +90,6 @@ public class MCCamera extends WXComponent<CameraView> {
 
     @Override
     protected CameraView initComponentHostView(@NonNull Context context) {
-        Log.d("yejy", "执行了initComponentHostView");
         CameraView cameraView = new CameraView(context);
 //        cameraView.setKeepScreenOn(true);
         cameraView.setFacing(CameraKit.Constants.FACING_BACK);
@@ -116,7 +97,7 @@ public class MCCamera extends WXComponent<CameraView> {
         cameraView.setFocus(CameraKit.Constants.FOCUS_CONTINUOUS);
         cameraView.setPermissions(CameraKit.Constants.PERMISSIONS_PICTURE);
         cameraView.setCropOutput(true);
-        cameraView.setJpegQuality(97);
+        cameraView.setJpegQuality(95);
         cameraView.setMethod(CameraKit.Constants.METHOD_STILL);
         return cameraView;
     }
@@ -141,9 +122,8 @@ public class MCCamera extends WXComponent<CameraView> {
      */
     @JSMethod
     public void startCamera(final JSCallback jsCallback) {
-        Log.d("yejy", "执行了startCamera");
-        if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
-            CameraView cameraKitView = getHostView();
+        final CameraView cameraKitView = getHostView();
+        if (hasPermissions(getContext(), Manifest.permission.CAMERA)) {
             if (cameraKitView != null && !cameraKitView.isStarted()) {
                 cameraKitView.start();
             }
@@ -151,10 +131,28 @@ public class MCCamera extends WXComponent<CameraView> {
             params.put(SUCCEED, true);
             jsCallback.invoke(params);
         } else {
-            Map<String, Object> params = new HashMap<>();
-            params.put(SUCCEED, false);
-            params.put(ERRORDESC, "打开照相机需要拍照权限");
-            jsCallback.invoke(params);
+            PermissionUtil.requestSystemPermissions((Activity) getContext(),
+                    new String[]{Manifest.permission.CAMERA},
+                    1352335, new PermissionUtil.Request() {
+                        public void onGranted(String permission) {
+                            if (permission.equals("CAMERA")) {
+                                if (cameraKitView != null && !cameraKitView.isStarted()) {
+                                    cameraKitView.start();
+                                }
+                            }
+
+                        }
+
+                        public void onDenied(String permission) {
+                            if (permission.equals("CAMERA")) {
+                                Map<String, Object> params = new HashMap<>();
+                                params.put(SUCCEED, false);
+                                params.put(ERRORDESC, "打开照相机需要拍照权限");
+                                jsCallback.invoke(params);
+                            }
+
+                        }
+                    });
         }
     }
 
@@ -221,7 +219,7 @@ public class MCCamera extends WXComponent<CameraView> {
                         outputStream.flush();
                         Map<String, Object> result = new HashMap<>();
                         result.put(SUCCEED, true);
-                        result.put("path", savedPhoto.getPath());
+                        result.put("path", savedPhoto.getAbsolutePath());
                         jsCallback.invoke(result);
                     } catch (java.io.IOException e) {
                         Map<String, Object> result = new HashMap<>();
@@ -243,7 +241,7 @@ public class MCCamera extends WXComponent<CameraView> {
             });
             cameraView.setActivated(false);
         } else {
-            if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
+            if (hasPermissions(getContext(), Manifest.permission.CAMERA)) {
                 if (cameraView != null && !cameraView.isStarted()) {
                     cameraView.start();
                 }
@@ -252,10 +250,29 @@ public class MCCamera extends WXComponent<CameraView> {
                 params.put(ERRORDESC, "相机已打开，请再次点击拍照");
                 jsCallback.invoke(params);
             } else {
-                Map<String, Object> params = new HashMap<>();
-                params.put(SUCCEED, false);
-                params.put(ERRORDESC, "打开照相机需要拍照权限");
-                jsCallback.invoke(params);
+                final CameraView cameraKitView = getHostView();
+                PermissionUtil.requestSystemPermissions((Activity) getContext(),
+                        new String[]{Manifest.permission.CAMERA},
+                        1352335, new PermissionUtil.Request() {
+                            public void onGranted(String permission) {
+                                if (permission.equals("CAMERA")) {
+                                    if (cameraKitView != null && !cameraKitView.isStarted()) {
+                                        cameraKitView.start();
+                                    }
+                                }
+
+                            }
+
+                            public void onDenied(String permission) {
+                                if (permission.equals("CAMERA")) {
+                                    Map<String, Object> params = new HashMap<>();
+                                    params.put(SUCCEED, false);
+                                    params.put(ERRORDESC, "打开照相机需要拍照权限");
+                                    jsCallback.invoke(params);
+                                }
+
+                            }
+                        });
             }
         }
     }
@@ -272,14 +289,28 @@ public class MCCamera extends WXComponent<CameraView> {
     @Override
     protected void onFinishLayout() {
         super.onFinishLayout();
-        Log.d("yejy", "执行了onFinishLayout");
-        if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
-            CameraView cameraKitView = getHostView();
+        final CameraView cameraKitView = getHostView();
+        if (hasPermissions(getContext(), Manifest.permission.CAMERA)) {
             if (cameraKitView != null && !cameraKitView.isStarted()) {
                 cameraKitView.start();
             }
         } else {
-            requestCameraPermissions();
+            PermissionUtil.requestSystemPermissions((Activity) getContext(),
+                    new String[]{Manifest.permission.CAMERA},
+                    1352335, new PermissionUtil.Request() {
+                        public void onGranted(String permission) {
+                            if (permission.equals("CAMERA")) {
+                                if (cameraKitView != null && !cameraKitView.isStarted()) {
+                                    cameraKitView.start();
+                                }
+                            }
+
+                        }
+
+                        public void onDenied(String permission) {
+                            //todo
+                        }
+                    });
         }
     }
 
@@ -292,27 +323,22 @@ public class MCCamera extends WXComponent<CameraView> {
         super.destroy();
     }
 
-
-    @AfterPermissionGranted(CAMERA_PERMISSION_REQUEST_CODE)
-    private void requestCameraPermissions() {
-        String[] perms = {Manifest.permission.CAMERA};
-        if (!EasyPermissions.hasPermissions(getContext(), perms)) {
-            if (getContext() instanceof Activity) {
-                EasyPermissions.requestPermissions((Activity) getContext(),
-                        "拍照需要打开相机权限", CAMERA_PERMISSION_REQUEST_CODE, perms);
-            }
-        } else {
-            CameraView hostView = getHostView();
-            if (hostView != null && !hostView.isStarted()) {
-                hostView.start();
+    /**
+     * 检查权限
+     */
+    private boolean hasPermissions(@NonNull Context context,
+                                   @Size(min = 1) @NonNull String... perms) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            Log.w("MCCamera", "hasPermissions: API version < M, returning true by default");
+            return true;
+        }
+        for (String perm : perms) {
+            if (ContextCompat.checkSelfPermission(context, perm)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return false;
             }
         }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, permissionCallbacks);
+        return true;
     }
 
 
