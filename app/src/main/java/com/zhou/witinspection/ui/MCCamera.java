@@ -40,7 +40,7 @@ import io.dcloud.common.adapter.util.PermissionUtil;
 /**
  * WX自定义Camera
  */
-@Component(lazyload = false)
+@Component
 public class MCCamera extends WXComponent<CameraView> {
 
 
@@ -118,13 +118,46 @@ public class MCCamera extends WXComponent<CameraView> {
     }
 
     /**
+     * 相机重启
+     */
+    @JSMethod
+    public void restartCamera(final JSCallback jsCallback) {
+        CameraView cameraView = getHostView();
+        if (cameraView != null) {
+            cameraView.stop();
+            cameraView.start();
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put(SUCCEED, true);
+        jsCallback.invoke(params);
+    }
+
+    @Override
+    public void onActivityPause() {
+        CameraView cameraKitView = getHostView();
+        if (cameraKitView != null && cameraKitView.isStarted()) {
+            cameraKitView.stop();
+        }
+        super.onActivityPause();
+    }
+
+    @Override
+    public void onActivityResume() {
+        final CameraView cameraKitView = getHostView();
+        if (cameraKitView != null) {
+            cameraKitView.start();
+        }
+        super.onActivityResume();
+    }
+
+    /**
      * 打开摄像头
      */
     @JSMethod
     public void startCamera(final JSCallback jsCallback) {
         final CameraView cameraKitView = getHostView();
         if (hasPermissions(getContext(), Manifest.permission.CAMERA)) {
-            if (cameraKitView != null && !cameraKitView.isStarted()) {
+            if (cameraKitView != null) {
                 cameraKitView.start();
             }
             Map<String, Object> params = new HashMap<>();
@@ -163,7 +196,14 @@ public class MCCamera extends WXComponent<CameraView> {
     public void captureImage(final JSCallback jsCallback) {
         // 假如没打开摄像头，先打开
         final CameraView cameraView = getHostView();
-        if (cameraView != null && cameraView.isStarted()) {
+        if (cameraView == null) {
+            Map<String, Object> result = new HashMap<>();
+            result.put(SUCCEED, false);
+            result.put(ERRORDESC, "相机初始化失败");
+            jsCallback.invoke(result);
+            return;
+        }
+        if (cameraView.isStarted()) {
             cameraView.captureImage(new CameraKitEventCallback<CameraKitImage>() {
                 @Override
                 public void callback(CameraKitImage cameraKitImage) {
@@ -172,13 +212,11 @@ public class MCCamera extends WXComponent<CameraView> {
                         result.put(SUCCEED, false);
                         result.put(ERRORDESC, "系统异常，请重新检查拍照权限");
                         jsCallback.invoke(result);
-                        cameraView.setActivated(true);
                         return;
                     }
                     byte[] capturedImage = cameraKitImage.getJpeg();
                     if (capturedImage == null) {
                         cameraView.setJpegQuality(80);
-                        cameraView.setActivated(true);
                         Map<String, Object> result = new HashMap<>();
                         result.put(SUCCEED, false);
                         result.put(ERRORDESC, "图片过大，请重试");
@@ -208,7 +246,6 @@ public class MCCamera extends WXComponent<CameraView> {
                         result.put(SUCCEED, false);
                         result.put(ERRORDESC, "Image does not have the correct src");
                         jsCallback.invoke(result);
-                        cameraView.setActivated(true);
                         return;
                     }
 
@@ -239,12 +276,10 @@ public class MCCamera extends WXComponent<CameraView> {
                         cameraView.start();
                 }
             });
-            cameraView.setActivated(false);
         } else {
             if (hasPermissions(getContext(), Manifest.permission.CAMERA)) {
-                if (cameraView != null && !cameraView.isStarted()) {
-                    cameraView.start();
-                }
+                cameraView.stop();
+                cameraView.start();
                 Map<String, Object> params = new HashMap<>();
                 params.put(SUCCEED, false);
                 params.put(ERRORDESC, "相机已打开，请再次点击拍照");
