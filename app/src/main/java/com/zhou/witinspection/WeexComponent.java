@@ -19,7 +19,6 @@ import com.taobao.weex.ui.action.BasicComponentData;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
-import com.taobao.weex.utils.WXViewToImageUtil;
 
 import java.util.HashMap;
 import java.util.Map;
