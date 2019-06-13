@@ -1,6 +1,6 @@
 <properties>
     <features>
-        <feature name="Barcode" value="io.dcloud.feature.barcode.BarcodeFeatureImpl"/>
+        <feature name="Barcode" value="io.dcloud.feature.barcode2.BarcodeFeatureImpl"/>
         <feature name="Speech" value="io.dcloud.feature.speech.SpeechFeatureImpl">
             <module name="iFly" value="io.dcloud.feature.speech.IflySpeechEngine"/>
             <module name="baidu" value="io.dcloud.feature.speech.BaiduSpeechEngine"/>
@@ -49,6 +49,7 @@
             <module name="Sina" value="io.dcloud.share.sina.SinaWeiboApiManager"/>
             <module name="Tencent" value="io.dcloud.share.tencent.TencentWeiboApiManager"/>
             <module name="Weixin" value="io.dcloud.share.mm.WeiXinApiManager"/>
+            <module name="QQ" value="io.dcloud.share.qq.QQApiManager"/>
         </feature>
         <feature name="OAuth" value="io.dcloud.feature.oauth.OAuthFeatureImpl">
             <module name="OAuth-Weixin" value="io.dcloud.feature.oauth.weixin.WeiXinOAuthService"/>
@@ -59,7 +60,8 @@
         </feature>
         <feature name="Stream" value="io.dcloud.appstream.js.StreamAppFeatureImpl"/>
         <feature name="Fingerprint" value="io.dcloud.feature.fingerprint.FingerPrintsImpl"/>
-        <feature name="Beacon" value="io.dcloud.feature.iBeacon.WxBluetoothFeatureImpl"/>
+        <feature name="iBeacon" value="io.dcloud.feature.iBeacon.WxBluetoothFeatureImpl"/>
+        <feature name="Bluetooth" value="io.dcloud.feature.bluetooth.BluetoothFeature"/>
     </features>
 
     <services>
