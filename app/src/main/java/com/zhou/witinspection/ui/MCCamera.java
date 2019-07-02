@@ -155,6 +155,7 @@ public class MCCamera extends WXComponent<CameraView> {
      */
     @JSMethod
     public void startCamera(final JSCallback jsCallback) {
+        Log.d("yejy", "正在调用打开相机");
         final CameraView cameraKitView = getHostView();
         if (hasPermissions(getContext(), Manifest.permission.CAMERA)) {
             if (cameraKitView != null) {
@@ -194,6 +195,7 @@ public class MCCamera extends WXComponent<CameraView> {
      */
     @JSMethod
     public void captureImage(final JSCallback jsCallback) {
+        Log.d("yejy", "正在调用相机拍照");
         // 假如没打开摄像头，先打开
         final CameraView cameraView = getHostView();
         if (cameraView == null) {
