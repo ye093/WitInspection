@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.taobao.weex.WXSDKInstance;

@@ -206,9 +206,27 @@ public class MCCamera extends WXComponent<CameraView> {
             return;
         }
         if (cameraView.isStarted()) {
+            // 两秒内没有回调则重启相机
+            final StringBuffer needRestart = new StringBuffer("0");
+            cameraView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (needRestart.length() == 1) {
+                        cameraView.stop();
+                        cameraView.start();
+                        Map<String, Object> result = new HashMap<>();
+                        result.put(SUCCEED, false);
+                        result.put(ERRORDESC, "相机准备就绪");
+                        jsCallback.invoke(result);
+                    }
+                }
+            }, 1000);
+
+
             cameraView.captureImage(new CameraKitEventCallback<CameraKitImage>() {
                 @Override
                 public void callback(CameraKitImage cameraKitImage) {
+                    needRestart.append("1");
                     if (cameraKitImage == null) {
                         Map<String, Object> result = new HashMap<>();
                         result.put(SUCCEED, false);
