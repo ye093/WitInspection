@@ -12,6 +12,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_SETTING" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- 关于部分手机适配刘海屏问题 start-->
     <!-- 适配华为手机刘海屏-->
@@ -30,8 +31,6 @@
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
-
-    <!-- 基座删除的部分权限 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -42,6 +41,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
